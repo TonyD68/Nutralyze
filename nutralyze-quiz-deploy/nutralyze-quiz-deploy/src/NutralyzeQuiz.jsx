@@ -691,8 +691,30 @@ Important: All recommendations must be informational and educational only — no
     if (step > 0) setStep(step - 1);
   }
 
-  function handleEmailSubmit() {
-    if (email.includes("@")) setEmailSent(true);
+  const [emailSending, setEmailSending] = useState(false);
+  const [emailErrorMsg, setEmailErrorMsg] = useState("");
+
+  async function handleEmailSubmit() {
+    if (!email.includes("@")) return;
+    setEmailSending(true);
+    setEmailErrorMsg("");
+    try {
+      const response = await fetch("/api/save-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, planText: result }),
+      });
+      const data = await response.json();
+      if (data.emailSent) {
+        setEmailSent(true);
+      } else {
+        setEmailErrorMsg("We saved your details but couldn't send the email right now.");
+      }
+    } catch (e) {
+      setEmailErrorMsg("Something went wrong. Please try again.");
+    } finally {
+      setEmailSending(false);
+    }
   }
 
   function renderResult() {
@@ -782,18 +804,23 @@ Important: All recommendations must be informational and educational only — no
               Enter your email to receive your full plan + weekly wellness tips.
             </div>
             {!emailSent ? (
-              <div style={styles.emailRow}>
-                <input
-                  style={styles.emailInput}
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <button style={styles.btnEmail} onClick={handleEmailSubmit}>
-                  Send plan
-                </button>
-              </div>
+              <>
+                <div style={styles.emailRow}>
+                  <input
+                    style={styles.emailInput}
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <button style={styles.btnEmail} onClick={handleEmailSubmit} disabled={emailSending}>
+                    {emailSending ? "Sending…" : "Send plan"}
+                  </button>
+                </div>
+                {emailErrorMsg && (
+                  <div style={{ color: palette.error, fontSize: 12, marginTop: 8 }}>{emailErrorMsg}</div>
+                )}
+              </>
             ) : (
               <div style={styles.emailSent}>✓ Plan sent — check your inbox!</div>
             )}
