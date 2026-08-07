@@ -702,7 +702,7 @@ Important: All recommendations must be informational and educational only — no
       const response = await fetch("/api/save-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, planText: result }),
+        body: JSON.stringify({ email, planText: result, products }),
       });
       const data = await response.json();
       if (data.emailSent) {
