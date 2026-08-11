@@ -93,7 +93,7 @@ export default async function handler(req, res) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "Nutralyze <onboarding@resend.dev>",
+          from: "Nutralyze <hello@send.nutralyze.health>",
           to: email,
           subject: "Your Nutralyze 30-Day Wellness Plan",
           html: emailHtml,
