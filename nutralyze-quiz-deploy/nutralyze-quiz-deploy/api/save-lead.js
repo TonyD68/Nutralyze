@@ -80,6 +80,10 @@ export default async function handler(req, res) {
       <div style="font-size:11px;color:#999;margin-top:24px;line-height:1.5;">
         Informational only — not medical advice. Consult a healthcare professional before starting any new supplement.
       </div>
+      <div style="font-size:11px;color:#999;margin-top:16px;padding-top:16px;border-top:1px solid #e2e2e2;text-align:center;line-height:1.6;">
+        You received this email because you requested your wellness plan from nutralyze.health.<br/>
+        <a href="mailto:privacy@nutralyze.health?subject=Unsubscribe&body=Please%20unsubscribe%20me%20from%20Nutralyze%20emails." style="color:#999;text-decoration:underline;">Unsubscribe</a>
+      </div>
     </div>`;
 
   // 3. Send the email via Resend (non-fatal if it fails — we still report DB status)
