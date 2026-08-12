@@ -768,7 +768,7 @@ Important: All recommendations must be informational and educational only — no
               <div style={{ fontSize: 12, color: palette.muted, lineHeight: 1.5 }}>
                 I consent to Nutralyze processing my health-related quiz answers to generate a personalised wellness plan, as described in the{" "}
                 <a
-                  href="/disclaimer"
+                  href="https://nutralyze.health/disclaimer-privacy-notice-nutralyze-health-disclaimer/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
