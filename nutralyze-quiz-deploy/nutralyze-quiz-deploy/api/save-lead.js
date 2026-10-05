@@ -62,11 +62,16 @@ export default async function handler(req, res) {
           <div style="font-size:15px;font-weight:600;color:#1a1a1a;margin-bottom:4px;">${escapeHtml(p.name || "")}</div>
           <div style="font-size:13px;color:#666;margin-bottom:10px;">${escapeHtml(p.benefit || "")}</div>
           <a href="${p.url}" style="display:inline-block;background:#00c9a7;color:#000;text-decoration:none;font-size:13px;font-weight:700;padding:8px 16px;border-radius:6px;">View product →</a>
+          ${
+            p.alt && p.alt.url
+              ? `<div style="margin-top:10px;font-size:12px;color:#666;">Another option: <a href="${p.alt.url}" style="color:#00937a;font-weight:600;text-decoration:underline;">${escapeHtml(p.alt.name || "View")}</a></div>`
+              : ""
+          }
         </div>`
         )
         .join("")}
       <div style="font-size:11px;color:#999;margin-top:12px;line-height:1.5;">
-        As an Amazon Associate, Nutralyze earns from qualifying purchases. This does not affect our recommendations.
+        As an Amazon Associate, Nutralyze earns from qualifying purchases. We may also earn a commission from other partner retailers, including Simply Supplements. This does not affect our recommendations.
       </div>
     </div>`
     : "";
