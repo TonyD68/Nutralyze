@@ -141,6 +141,54 @@ const PRODUCTS = {
   },
 };
 
+// Map whatever the AI wrote to catalogue keys
+const KEY_ALIASES = {
+  "vitamin-d": ["vitamin-d", "vitamind", "vitamin-d3", "d3", "vitamin d"],
+  "magnesium": ["magnesium"],
+  "omega-3": ["omega-3", "omega3", "omega", "fish-oil"],
+  "b12": ["b12", "vitamin-b12", "vitaminb12"],
+  "zinc": ["zinc"],
+  "vitamin-c": ["vitamin-c", "vitaminc"],
+  "iron": ["iron"],
+  "coq10": ["coq10", "coq-10", "coenzyme-q10", "q10"],
+  "ashwagandha": ["ashwagandha"],
+};
+function normaliseKey(raw) {
+  const k = raw.toLowerCase().replace(/[*_`"'\s]/g, "").replace(/–|—/g, "-");
+  return Object.keys(KEY_ALIASES).find((key) => KEY_ALIASES[key].some((a) => a.replace(/\s/g, "") === k)) || null;
+}
+
+// Text patterns used when the PRODUCTS line is missing
+const TEXT_PATTERNS = {
+  "vitamin-d": /vitamin\s*d3?\b/i,
+  "magnesium": /magnesium/i,
+  "omega-3": /omega[\s-]*3|fish[\s-]*oil|\bepa\b|\bdha\b/i,
+  "b12": /\bb[\s-]?12\b/i,
+  "zinc": /\bzinc\b/i,
+  "vitamin-c": /vitamin\s*c\b/i,
+  "iron": /\biron\b/i,
+  "coq10": /co[\s-]?q[\s-]?10|coenzyme\s*q10/i,
+  "ashwagandha": /ashwagandha/i,
+};
+
+function pickProductsFromPlan(text) {
+  // 1) Explicit PRODUCTS: line anywhere in the answer
+  const m = text.match(/PRODUCTS\s*:\s*\**\s*([^\n]+)/i);
+  if (m) {
+    const keys = [...new Set(m[1].split(/[,;|]/).map(normaliseKey).filter(Boolean))];
+    if (keys.length) return keys.slice(0, 4).map((k) => PRODUCTS[k]);
+  }
+  // 2) Read section 2 of the plan and take supplements in the order they appear
+  const sec = text.match(/2\.[^\n]*SUPPLEMENT[\s\S]*?(?=\n\s*\**\s*3\.|$)/i);
+  const zone = sec ? sec[0] : text;
+  const found = Object.keys(TEXT_PATTERNS)
+    .map((k) => ({ k, i: zone.search(TEXT_PATTERNS[k]) }))
+    .filter((x) => x.i >= 0)
+    .sort((a, b) => a.i - b.i)
+    .map((x) => x.k);
+  return found.slice(0, 4).map((k) => PRODUCTS[k]);
+}
+
 // Logic: pick relevant products based on quiz answers
 function selectProducts(answers) {
   const selected = [];
@@ -725,17 +773,17 @@ ${summary}
 
 ${catalogueInfo}
 
+FIRST LINE OF YOUR ANSWER — output exactly this line and nothing else on it:
+PRODUCTS:key1,key2,key3,key4
+using 3-4 keys from this list, matching the supplements you then recommend in section 2, in the same order: ${productKeys}
+Then a blank line, then the plan.
+
 Create a structured, science-backed wellness plan. Format it clearly with these sections:
 1. YOUR PROFILE SUMMARY (2-3 sentences interpreting their data)
 2. TOP 4 RECOMMENDED SUPPLEMENTS (each with: nutrient and form, why it's right for them, dose within the range above, timing, and any caution listed above)
 3. NUTRITION FOCUS (3-4 key dietary principles for their profile)
 4. LIFESTYLE RECOMMENDATIONS (2-3 practical habits)
 5. WHAT TO EXPECT IN 30 DAYS
-
-At the very end, on a new line, add exactly this format with no extra text:
-PRODUCTS:key1,key2,key3,key4
-
-Choose 3-4 keys from this list that best match your supplement recommendations: ${productKeys}
 
 Important: All recommendations must be informational and educational only — not medical advice. Use clear, evidence-based language and only EU-authorised health claim wording (e.g. \"contributes to normal immune function\", never \"boosts\", \"treats\" or \"prevents\"). Be specific to their profile, not generic. Keep it concise and actionable.`;
 
@@ -748,17 +796,14 @@ Important: All recommendations must be informational and educational only — no
       const data = await response.json();
       const fullText = data.text || "";
 
-      // Parse PRODUCTS line and strip it from visible text
-      const productsMatch = fullText.match(/PRODUCTS:([a-z0-9,\-]+)/i);
-      if (productsMatch) {
-        const keys = productsMatch[1].split(",").map(k => k.trim()).filter(k => PRODUCTS[k]);
-        setProducts(keys.slice(0, 4).map(k => PRODUCTS[k]));
-      } else {
-        // Fallback to answer-based selection
-        setProducts(selectProducts(answers));
-      }
+      const picked = pickProductsFromPlan(fullText);
+      setProducts(picked.length ? picked : selectProducts(answers));
 
-      const cleanText = fullText.replace(/\nPRODUCTS:[^\n]*/i, "").trim();
+      const cleanText = fullText
+        .split("\n")
+        .filter((line) => !/PRODUCTS\s*:/i.test(line))
+        .join("\n")
+        .trim();
       setResult(cleanText);
       setScreen("result");
     } catch (e) {
