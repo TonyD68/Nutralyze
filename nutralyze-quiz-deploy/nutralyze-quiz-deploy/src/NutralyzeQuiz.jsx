@@ -46,60 +46,98 @@ const STEPS = [
 ];
 
 // Affiliate product catalogue
+// Main card = first choice, `alt` = "Another option" row under the card.
+// SS = Simply Supplements via Awin (30-day cookie), Amazon = Amazon Associates UK.
 const PRODUCTS = {
   "vitamin-d": {
     name: "Terranova Vitamin D3 2000 IU + K2",
-    benefit: "Bone health, immunity & calcium metabolism",
+    benefit: "Normal bones, muscle function & immune system",
     url: "https://www.amazon.co.uk/Terranova-Vitamin-D3-K2-Complex/dp/B07PFF6TW9/?tag=nutralyze-21",
-    tag: "Vitamin D3 + K2",
+    tag: "Vitamin D3",
+    alt: {
+      name: "Simply Supplements Vitamin D3 2,000iu",
+      url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Fvitamin-d3-2000iu%3Fvariant%3D64643278012765",
+    },
   },
   "magnesium": {
-    name: "Magnesium Bisglycinate 500mg",
-    benefit: "Relaxation, sleep & muscle recovery",
-    url: "https://www.amazon.co.uk/Supplements-Magnesium-Bisglycinate-Absorption-Supplement/dp/B0F3JY2FB8/?tag=nutralyze-21",
+    name: "Simply Supplements Magnesium Bisglycinate 1500mg",
+    benefit: "Muscle function, nervous system & less tiredness",
+    url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Fmagnesium-bisglycinate-1500mg%3Fvariant%3D64643270312285",
     tag: "Magnesium",
+    alt: {
+      name: "Elevate Magnesium Bisglycinate 1500mg",
+      url: "https://www.amazon.co.uk/Supplements-Magnesium-Bisglycinate-Absorption-Supplement/dp/B0F3JY2FB8/?tag=nutralyze-21",
+    },
   },
   "omega-3": {
-    name: "Solgar Triple Strength Omega-3",
-    benefit: "Heart, brain & joint support",
-    url: "https://www.amazon.co.uk/Solgar-Triple-Strength-Omega-3-Softgels/dp/B000NI6WHY/?tag=nutralyze-21",
+    name: "Simply Supplements Triple Strength Omega 3 1000mg",
+    benefit: "Normal heart, brain & vision function",
+    url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Fomega-3-triple-strength-1000mg%3Fvariant%3D64643271524701",
     tag: "Omega-3",
+    alt: {
+      name: "Solgar Triple Strength Omega-3",
+      url: "https://www.amazon.co.uk/Solgar-Triple-Strength-Omega-3-Softgels/dp/B000NI6WHY/?tag=nutralyze-21",
+    },
   },
   "b12": {
     name: "Solgar Methylcobalamin B12 1000mcg",
-    benefit: "Energy, nerve function & red blood cells",
+    benefit: "Energy metabolism, red blood cells & less tiredness",
     url: "https://www.amazon.co.uk/Solgar-Methylcobalamin-Vitamin-1000-Nuggets/dp/B0F5HTSG2N/?tag=nutralyze-21",
     tag: "Vitamin B12",
+    alt: {
+      name: "Simply Supplements Vitamin B12 1000µg",
+      url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Fvitamin-b12-1000mcg%3Fvariant%3D64643277390173",
+    },
   },
   "zinc": {
     name: "Solgar Zinc Picolinate 22mg",
-    benefit: "Immunity, skin & testosterone support",
+    benefit: "Normal immune system, skin & testosterone levels",
     url: "https://www.amazon.co.uk/Solgar-Zinc-Picolinate-22-Tablets/dp/B00020ICLC/?tag=nutralyze-21",
     tag: "Zinc",
+    alt: {
+      name: "Simply Supplements Zinc 15mg",
+      url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Fzinc-15mg%3Fvariant%3D64643278078301",
+    },
   },
   "vitamin-c": {
-    name: "Solgar Vitamin C 1000mg",
-    benefit: "Antioxidant, immunity & collagen synthesis",
-    url: "https://www.amazon.co.uk/Solgar-Vitamin-1000-Vegetable-Capsules/dp/B00020IBF4/?tag=nutralyze-21",
+    name: "Simply Supplements Vitamin C 1000mg with Rosehip",
+    benefit: "Immune system, collagen formation & less tiredness",
+    url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Fvitamin-c-1000mg-rosehip-citrus-bioflavonoids%3Fvariant%3D64643277324637",
     tag: "Vitamin C",
+    alt: {
+      name: "Solgar Vitamin C 1000mg",
+      url: "https://www.amazon.co.uk/Solgar-Vitamin-1000-Vegetable-Capsules/dp/B00020IBF4/?tag=nutralyze-21",
+    },
   },
   "iron": {
-    name: "Solgar Gentle Iron Bisglycinate",
-    benefit: "Energy, oxygen transport & fatigue reduction",
-    url: "https://www.amazon.co.uk/Solgar-Gentle-Bisglycinate-Vegetable-Capsules/dp/B0001OP028/?tag=nutralyze-21",
+    name: "Simply Supplements Iron 14mg",
+    benefit: "Oxygen transport, energy & less tiredness",
+    url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Firon-14mg%3Fvariant%3D64643267592541",
     tag: "Iron",
+    alt: {
+      name: "Solgar Gentle Iron Bisglycinate",
+      url: "https://www.amazon.co.uk/Solgar-Gentle-Bisglycinate-Vegetable-Capsules/dp/B0001OP028/?tag=nutralyze-21",
+    },
   },
   "coq10": {
     name: "Solgar Vegetarian CoQ-10 200mg",
-    benefit: "Cellular energy & cardiovascular health",
+    benefit: "Popular for cellular energy (no EFSA-authorised claim)",
     url: "https://www.amazon.co.uk/Solgar-Vegetarian-CoQ-10-200-Capsules/dp/B00S9XYW40/?tag=nutralyze-21",
     tag: "CoQ10",
+    alt: {
+      name: "Simply Supplements Co-Enzyme Q10 100mg",
+      url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Fco-enzyme-q10-100mg%3Fvariant%3D64643254550877",
+    },
   },
   "ashwagandha": {
-    name: "Solgar Ashwagandha Root Extract",
-    benefit: "Stress relief, cortisol balance & energy",
-    url: "https://www.amazon.co.uk/SOLGAR-Ashwaganda-Root-60-CT/dp/B000Z92QVW/?tag=nutralyze-21",
+    name: "Simply Supplements KSM-66® Ashwagandha 600mg",
+    benefit: "Traditional adaptogenic herb, studied for stress",
+    url: "https://www.awin1.com/cread.php?awinmid=5959&awinaffid=2969311&ued=https%3A%2F%2Fwww.simplysupplements.co.uk%2Fproducts%2Fashwagandha-600mg%3Fvariant%3D64643259105629",
     tag: "Ashwagandha",
+    alt: {
+      name: "Solgar Ashwagandha Root Extract",
+      url: "https://www.amazon.co.uk/SOLGAR-Ashwaganda-Root-60-CT/dp/B000Z92QVW/?tag=nutralyze-21",
+    },
   },
 };
 
@@ -511,6 +549,42 @@ const styles = {
     whiteSpace: "nowrap",
     flexShrink: 0,
   },
+  productCardWrap: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  altLink: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    flexWrap: "wrap",
+    padding: "9px 18px",
+    marginTop: -1,
+    background: palette.optionBg,
+    border: `1px solid ${palette.productBorder}`,
+    borderTop: "none",
+    borderRadius: "0 0 14px 14px",
+    textDecoration: "none",
+  },
+  altLabel: {
+    fontSize: 10,
+    fontWeight: 700,
+    color: palette.muted,
+    letterSpacing: "1.2px",
+    textTransform: "uppercase",
+  },
+  altName: {
+    fontSize: 12.5,
+    fontWeight: 600,
+    color: palette.text,
+    flex: 1,
+    minWidth: 0,
+  },
+  altArrow: {
+    fontSize: 13,
+    fontWeight: 700,
+    color: palette.accent,
+  },
   affiliateNote: {
     fontSize: 11,
     color: palette.muted,
@@ -543,28 +617,41 @@ function ProductCards({ products }) {
     <div style={styles.productsSection}>
       <div style={styles.productsSectionTitle}>✦ Recommended for you</div>
       <div style={styles.productsSectionSub}>
-        Science-backed supplements matched to your profile — available on Amazon UK
+        Science-backed supplements matched to your profile — from trusted UK retailers
       </div>
       <div style={styles.productGrid}>
         {products.map((p) => (
-          <a
-            key={p.url}
-            href={p.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.productCard}
-          >
-            <div style={styles.productLeft}>
-              <div style={styles.productTag}>{p.tag}</div>
-              <div style={styles.productName}>{p.name}</div>
-              <div style={styles.productBenefit}>{p.benefit}</div>
-            </div>
-            <div style={styles.productBtn}>View →</div>
-          </a>
+          <div key={p.url} style={styles.productCardWrap}>
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              style={p.alt ? { ...styles.productCard, borderRadius: "14px 14px 0 0" } : styles.productCard}
+            >
+              <div style={styles.productLeft}>
+                <div style={styles.productTag}>{p.tag}</div>
+                <div style={styles.productName}>{p.name}</div>
+                <div style={styles.productBenefit}>{p.benefit}</div>
+              </div>
+              <div style={styles.productBtn}>View →</div>
+            </a>
+            {p.alt && (
+              <a
+                href={p.alt.url}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                style={styles.altLink}
+              >
+                <span style={styles.altLabel}>Another option</span>
+                <span style={styles.altName}>{p.alt.name}</span>
+                <span style={styles.altArrow}>→</span>
+              </a>
+            )}
+          </div>
         ))}
       </div>
       <div style={styles.affiliateNote}>
-        * As an Amazon Associate, Nutralyze earns from qualifying purchases. This does not affect our recommendations.
+        * As an Amazon Associate, Nutralyze earns from qualifying purchases. We may also earn a commission from other partner retailers, including Simply Supplements. This does not affect our recommendations.
       </div>
     </div>
   );
@@ -618,16 +705,17 @@ export default function NutralyzeQuiz() {
     const productKeys = Object.keys(PRODUCTS).join(", ");
 
     const catalogueInfo = `
-Available supplement products (use these exact names, dosages and forms in your recommendations):
-- vitamin-d: Terranova Vitamin D3 2000 IU + K2 complex
-- magnesium: Magnesium Bisglycinate 500mg (note: 500mg is the elemental + glycinate combined weight; effective elemental dose is ~100mg — recommend as 1 capsule daily)
-- omega-3: Solgar Triple Strength Omega-3 (fish oil, high EPA/DHA)
-- b12: Solgar Methylcobalamin B12 1000mcg (sublingual, methylated form)
-- zinc: Solgar Zinc Picolinate 22mg
-- vitamin-c: Solgar Vitamin C 1000mg
-- iron: Solgar Gentle Iron Bisglycinate (gentle on stomach)
-- coq10: Solgar Vegetarian CoQ-10 200mg
-- ashwagandha: Solgar Ashwagandha Root Extract (standardised root extract, not KSM-66 — refer to it as "Ashwagandha Root Extract")
+Supplements you may recommend (use ONLY these keys). Refer to each by nutrient and form, NOT by brand or shop name — the user sees two shop options for each.
+Keep doses within these UK/EU-conservative ranges:
+- vitamin-d: Vitamin D3 — 1,000–2,000 IU (25–50 µg) daily with a meal, especially October–March. Never suggest more than 4,000 IU/day.
+- magnesium: Magnesium bisglycinate — follow the label serving; supplemental elemental magnesium should stay at or below 250 mg/day (EFSA). Evening is a common time.
+- omega-3: Fish-oil omega-3 — 250–1,000 mg combined EPA+DHA daily with food.
+- b12: Vitamin B12 — 1,000 µg daily or a few times per week; especially relevant for vegans, vegetarians and over-50s.
+- zinc: Zinc — 15 mg daily with food; do not exceed 25 mg/day from supplements.
+- vitamin-c: Vitamin C — 500–1,000 mg daily; do not exceed 1,000 mg/day from supplements.
+- iron: Iron — 14–20 mg daily, ideally with vitamin C and away from tea/coffee. Say clearly that iron should not be taken long-term without checking iron levels with a GP, and it is not for men or post-menopausal women unless advised.
+- coq10: Coenzyme Q10 — 100–200 mg daily with a meal containing fat. Do not make health claims; say it is popular and being studied. Mention it may interact with blood thinners (e.g. warfarin).
+- ashwagandha: Standardised ashwagandha root extract — 300–600 mg daily. Always add: not suitable in pregnancy or breastfeeding, with thyroid or liver conditions, or alongside sedatives or thyroid medication; stop and see a GP if any side effects occur.
 `;
 
     const prompt = `You are a certified nutritionist creating a personalised 30-day wellness plan.
@@ -639,7 +727,7 @@ ${catalogueInfo}
 
 Create a structured, science-backed wellness plan. Format it clearly with these sections:
 1. YOUR PROFILE SUMMARY (2-3 sentences interpreting their data)
-2. TOP 4 RECOMMENDED SUPPLEMENTS (each with: exact product name from the catalogue above, why it's right for them, dosage matching the catalogue, timing)
+2. TOP 4 RECOMMENDED SUPPLEMENTS (each with: nutrient and form, why it's right for them, dose within the range above, timing, and any caution listed above)
 3. NUTRITION FOCUS (3-4 key dietary principles for their profile)
 4. LIFESTYLE RECOMMENDATIONS (2-3 practical habits)
 5. WHAT TO EXPECT IN 30 DAYS
@@ -649,7 +737,7 @@ PRODUCTS:key1,key2,key3,key4
 
 Choose 3-4 keys from this list that best match your supplement recommendations: ${productKeys}
 
-Important: All recommendations must be informational and educational only — not medical advice. Use confident, evidence-based language. Be specific to their profile, not generic. Keep it concise and actionable.`;
+Important: All recommendations must be informational and educational only — not medical advice. Use clear, evidence-based language and only EU-authorised health claim wording (e.g. \"contributes to normal immune function\", never \"boosts\", \"treats\" or \"prevents\"). Be specific to their profile, not generic. Keep it concise and actionable.`;
 
     try {
       const response = await fetch("/api/generate-plan", {
